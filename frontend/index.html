@@ -7,15 +7,15 @@
     <h1 id="greeting">Loading...</h1>
 
     <script>
-    fetch("/api/hello")
-        .then(res => res.text())
-        .then(data => {
-            document.getElementById("greeting").innerText = data;
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById("greeting").innerText = "Error connecting to server";
-        });
-</script>
+        fetch("http://localhost:3000")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("greeting").innerText = data;
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById("greeting").innerText = "Error connecting to server";
+            });
+    </script>
 </body>
 </html>
