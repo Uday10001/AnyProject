@@ -78,7 +78,7 @@
             }, 3000);
         }
 
-        fetch("http://3.111.214.89:3000", { mode: "no-cors" })
+        fetch("/api/proxy")
             .then(res => {
                 if (!res.ok) throw new Error("Server error");
                 return res.text();
