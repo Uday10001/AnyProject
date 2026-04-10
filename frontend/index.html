@@ -1,21 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Greeting Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff4d4d;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .popup.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-    <h1 id="greeting">Loading...</h1>
+
+    <div class="card">
+        <h1 id="greeting">Connecting...</h1>
+        <div class="status" id="status">Trying to reach backend</div>
+    </div>
+
+    <div id="popup" class="popup">Server not available</div>
 
     <script>
+        const greeting = document.getElementById("greeting");
+        const statusText = document.getElementById("status");
+        const popup = document.getElementById("popup");
+
+        function showPopup(message) {
+            popup.innerText = message;
+            popup.classList.add("show");
+
+            setTimeout(() => {
+                popup.classList.remove("show");
+            }, 3000);
+        }
+
         fetch("http://localhost:3000")
-            .then(res => res.text())
+            .then(res => {
+                if (!res.ok) throw new Error("Server error");
+                return res.text();
+            })
             .then(data => {
-                document.getElementById("greeting").innerText = data;
+                greeting.innerText = data;
+                statusText.innerText = "Connected to backend ✅";
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById("greeting").innerText = "Error connecting to server";
+
+                // fallback UI
+                greeting.innerText = "Welcome 👋";
+                statusText.innerText = "Offline mode";
+
+                // popup
+                showPopup("Backend not running on localhost:3000");
             });
     </script>
+
 </body>
 </html>
