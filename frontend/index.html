@@ -78,7 +78,7 @@
             }, 3000);
         }
 
-        fetch("http://ec2-3-111-214-89.ap-south-1.compute.amazonaws.com")
+        fetch("http://3.111.214.89:3000", { mode: "no-cors" })
             .then(res => {
                 if (!res.ok) throw new Error("Server error");
                 return res.text();
