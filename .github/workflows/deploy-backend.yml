@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'backend/**'
 
 jobs:
   deploy:
@@ -20,4 +22,4 @@ jobs:
             cd /home/ec2-user/AnyProject/backend
             git pull origin main
             npm install
-            pm2 reload server || pm2 start npm --name "server" -- start
+            pm2 reload app || pm2 start npm --name "app" -- start
