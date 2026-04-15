@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   try {
-    const response = await fetch("http://3.111.214.89");
+    const response = await fetch("http://13.127.104.73");
     const data = await response.text();
 
     res.status(200).send(data);
